@@ -5,11 +5,11 @@ HyperLedger Multi-Host 구성하기
 * 구성 목표
    * node별 container 구성
    * node 정보  
-* 준비작업
+* 인프라 준비작업
   * host name 설정
   * docker swarm 설정
   * overlay network 설정
-* channel-artifacts, crypto-config 생성 및 복제
+* artifacts,MSP(channel-artifacts, crypto-config) 준비작업
 * Oderer deploy
 * peer deploy
 
@@ -94,7 +94,7 @@ $docker network ls
 
 **인프라 준비 완료**
 
-channel-artifacts, crypto-config 생성
+artifacts,MSP(channel-artifacts, crypto-config) 준비작업
 ----
 > first-network의 byfn.sh를 실행하여 channel-artifacts, crypto-config를 생성하도록 하겠습니다.
 
