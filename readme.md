@@ -3,7 +3,8 @@ HyperLedger Multi-Host 구성하기
    
 * 개요
 * 구성 목표
-* NODE 정보  
+   * node별 container 구성
+   * node 정보  
 * 준비작업
   * host name 설정
   * docker swarm 설정
@@ -17,7 +18,7 @@ HyperLedger Multi-Host 구성하기
 
 구성
 ----
-### 구성 Container
+### node별 Container 구성
 ![구성도](https://user-images.githubusercontent.com/15353753/86920336-96da4a00-c164-11ea-8624-dd8d9cdf151d.png)
 
 ### 노드 정보
@@ -96,6 +97,12 @@ channel-artifacts, crypto-config 생성
 > first-network의 byfn.sh를 사용하여 channel-artifacts, crypto-config를 생성 하도록 하겠습니다
 - channel-artifacts 생성을 위한 설정
 - crypto-config 생성을 위한 설정
+- byfn.sh 실행
+```sh 
+#node1
+$./byfn.sh down
+$./byfn.sh generate
+```
 
 <pre>
 <code>
