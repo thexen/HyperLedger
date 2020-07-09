@@ -58,3 +58,10 @@ function test() {
 
 - [x] 체크박스
 - [ ] 체크박스
+
+
+   $ sudo firewall-cmd --add-port=2377/tcp --permanent
+   $ sudo firewall-cmd --add-port=7946/tcp --permanent
+   $ sudo firewall-cmd --add-port=7946/udp --permanent
+   $ sudo firewall-cmd --add-port=4789/udp –permanent
+   $ sudo firewall-cmd --reload
