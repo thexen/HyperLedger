@@ -96,9 +96,7 @@ channel-artifacts, crypto-config 생성
 ----
 > first-network의 byfn.sh를 실행하여 channel-artifacts, crypto-config를 생성하도록 하겠습니다.
 
-> 샘플에서는 5개 Orderer Container가 실행됩니다. 그러나 우리는 3개의 Orderer Container만 사용 할 것이므로 oderer4, orderer5를 제거합니다.
-
-> 그럼 fabric-samples가 설치 되어있는 폴더로 이동합니다.
+> 샘플에서는 5개 Orderer Container가 실행됩니다. 그러나 우리는 3개의 Orderer Container만 사용 할 것이므로 orderer4, orderer5를 제거하기 위해 fabric-samples가 설치 되어있는 폴더로 이동합니다.
 ```sh 
 #node1
 $pwd
@@ -189,6 +187,7 @@ $./byfn.sh down
 $./byfn.sh generate
 ```
 ![gen](https://user-images.githubusercontent.com/15353753/87034141-550fd900-c222-11ea-936a-b213a3f6eb19.png)
+- channel-artifacts, crypto-config 
 
 <pre>
 <code>
