@@ -8,6 +8,7 @@ HyperLedger Multi-Host 구성하기
   * host name 설정
   * docker swarm 설정
   * overlay network 설정
+* channel-artifacts, crypto-config 
 
   
 개요
@@ -86,6 +87,12 @@ $docker node ls
 $docker network create --attachable --driver overlay fabric
 $docker network ls
 ```
+![net](https://user-images.githubusercontent.com/15353753/87032148-1cbacb80-c21f-11ea-9704-d0de4d713127.png)
+
+**이로서 인프라 준비가 완료 되었습니다**
+
+channel-artifacts, crypto-config 생성
+----
 
 <pre>
 <code>
