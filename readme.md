@@ -74,13 +74,18 @@ $ocker swarm join-token manager
 #node2,node3,node4,node5
 $docker swarm join --token SWMTKN-1-39iqem217lt0fv4t1b7qs130jtynxw22bcpz5tch3dhcrr6svj-462ko5j185o3an0iumy7sqyy9 192.168.249.11:2377
 ```
-
 - join 확인
 ```sh 
 #node1
 $docker node ls
 ```
 ![node ls](https://user-images.githubusercontent.com/15353753/87030750-057ade80-c21d-11ea-941f-700288214381.png)
+- overlay network 
+```sh 
+#node1
+$docker network create --attachable --driver overlay fabric
+$docker network ls
+```
 
 <pre>
 <code>
