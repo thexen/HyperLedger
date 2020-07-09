@@ -1,0 +1,145 @@
+############################################################################################
+#By: DaeSob.j
+# - node4
+#   - peer4
+#   - couchdb4
+############################################################################################
+version: '3'
+
+volumes:
+  peer1.org2.example.com:
+
+networks:
+  fabric:
+    external:
+      name: fabric
+
+services:
+
+############################################################################################
+#Peer: Peer4
+############################################################################################
+  peer4:
+    image: hyperledger/fabric-peer:2.1
+    #image: alpine
+    environment:
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric
+      - FABRIC_LOGGING_SPEC=INFO
+
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2.example.com:10051
+
+      - CORE_PEER_PROFILE_ENABLED=true
+
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+
+      # Allow more time for chaincode container to build on install.
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+      - CORE_PEER_CHAINCODEADDRESS=peer1.org2.example.com:10052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
+
+      - CORE_PEER_ID=peer1.org2.example.com
+      - CORE_PEER_ADDRESS=peer1.org2.example.com:10051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
+      - CORE_PEER_LOCALMSPID=Org2MSP
+
+      # CouchDB
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer1.org2:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=             
+
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+
+    volumes:
+    - /var/run/:/host/var/run/
+    - /home/root/prj/fabric/fabric-samples-master/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp/:/etc/hyperledger/fabric/msp/
+    - /home/root/prj/fabric/fabric-samples-master/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/:/etc/hyperledger/fabric/tls/
+    - peer1.org2.example.com:/var/hyperledger/production
+
+    deploy:
+            replicas: 1
+            placement:
+              constraints: [node.hostname == node5]
+    ports:
+      - 10051:10051
+
+    networks:
+      fabric:
+        aliases:
+         - peer1.org2.example.com
+
+    depends_on:
+      - peer4-couchdb
+
+############################################################################################
+#Couch DB
+############################################################################################
+  peer4-couchdb:
+    image: hyperledger/fabric-couchdb
+
+    environment:
+      - COUCHDB_USER= 
+      - COUCHDB_PASSWORD= 
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric
+    ports:
+      - 8984:5984
+    networks:
+      fabric:
+        aliases:
+          - couchdb.peer1.org2
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname == node5]
+
+############################################################################################
+#cli
+############################################################################################
+  peer4-cli:
+    image: hyperledger/fabric-tools:2.1
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+
+      - CORE_PEER_ID=peer1-org2-cli
+      - CORE_PEER_ADDRESS=peer1.org2.example.com:10051
+      - CORE_PEER_LOCALMSPID=Org2MSP
+
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+
+    volumes:
+        - /var/run/:/host/var/run/
+        - /home/root/prj/fabric/fabric-samples-master/chaincode/:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
+        - /home/root/prj/fabric/fabric-samples-master/first-network/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - /home/root/prj/fabric/fabric-samples-master/first-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - /home/root/prj/fabric/fabric-samples-master/first-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname == node5]
+
+    networks:
+      - fabric
+
+
