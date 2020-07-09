@@ -103,6 +103,7 @@ channel-artifacts, crypto-config 생성
 $./byfn.sh down
 $./byfn.sh generate
 ```
+![gen](https://user-images.githubusercontent.com/15353753/87034141-550fd900-c222-11ea-936a-b213a3f6eb19.png)
 
 <pre>
 <code>
