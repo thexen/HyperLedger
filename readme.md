@@ -96,14 +96,14 @@ channel-artifacts, crypto-config 생성
 ----
 > first-network의 byfn.sh를 사용하여 channel-artifacts, crypto-config를 생성 하도록 하겠습니다
 > fabric-samples가 설치 되어있는 폴더로 이동합니다.
+> 샘플에서 제공하는 oderer는 5개이지만 우리들이 사용할 oderer는 3개이므로 2개를 비활성화 하도록 합니다.
 ```sh 
 #node1
 $pwd
 /home/root/prj/fabric/fabric-samples-master/first-network
 ```
 - channel-artifacts 생성을 위한 설정
-   - configtx.yam 파일을 열어 Profiles 섹션을 수정합니다.
-   - 샘플에서 제공하는 oderer는 5개이지만 우리들이 사용할 oderer는 3개이므로 2개를 비활성화 하도록 합니다.
+   - configtx.yaml 파일을 열어 아래와  Profiles 섹션을 수정합니다.
 ```sh 
 #node1
 $vi configtx.yaml
@@ -151,6 +151,35 @@ $vi configtx.yaml
 .
 ```
 - crypto-config 생성을 위한 설정
+   - crypto-config.yaml 파일을 열어 OrdererOrgs 섹션을 수정합니다.
+ ```sh 
+#node1
+$vi crypto-config.yaml
+.
+.
+.
+# ---------------------------------------------------------------------------
+# "OrdererOrgs" - Definition of organizations managing orderer nodes
+# ---------------------------------------------------------------------------
+OrdererOrgs:
+  # ---------------------------------------------------------------------------
+  # Orderer
+  # ---------------------------------------------------------------------------
+  - Name: Orderer
+    Domain: example.com
+    # ---------------------------------------------------------------------------
+    # "Specs" - See PeerOrgs below for complete description
+    # ---------------------------------------------------------------------------
+    Specs:
+      - Hostname: orderer
+      - Hostname: orderer2
+      - Hostname: orderer3
+      #- Hostname: orderer4
+      #- Hostname: orderer5
+.
+.
+.
+```    
 - byfn.sh 실행
 ```sh 
 #node1
