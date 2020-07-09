@@ -106,7 +106,7 @@ $pwd
 /home/root/prj/fabric/fabric-samples-master/first-network
 ```
 - channel-artifacts 생성을 위한 설정
-   - configtx.yaml 파일을 열어 아래와  Profiles 섹션을 수정합니다.
+   - configtx.yaml 파일을 열어 아래와 같이 Profiles 섹션을 수정합니다.
 ```sh 
 #node1
 $vi configtx.yaml
