@@ -81,7 +81,7 @@ $docker swarm join --token SWMTKN-1-39iqem217lt0fv4t1b7qs130jtynxw22bcpz5tch3dhc
 $docker node ls
 ```
 ![node ls](https://user-images.githubusercontent.com/15353753/87030750-057ade80-c21d-11ea-941f-700288214381.png)
-- overlay network 
+- overlay network 생성
 ```sh 
 #node1
 $docker network create --attachable --driver overlay fabric
@@ -93,6 +93,9 @@ $docker network ls
 
 channel-artifacts, crypto-config 생성
 ----
+> first-network의 byfn.sh를 사용하여 channel-artifacts, crypto-config를 생성 하도록 하겠습니다
+- channel-artifacts 생성을 위한 설정
+- crypto-config 생성을 위한 설정
 
 <pre>
 <code>
