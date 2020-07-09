@@ -14,12 +14,12 @@ HyperLedger Multi-Host 구성하기
 ----
 > Hyperledger의 first-network 예제는 Single-Host에서 동작 되도록 구성되어 실 서비스 적용에 적합하지 않은 구조입니다. 실 서비스 적용이 가능하도록 Multi-Host로 구성하는 방법을 알아 보도록 하겠습니다.
 
-구성 목표
+구성
 ----
+##### 구성 목표
 ![구성도](https://user-images.githubusercontent.com/15353753/86920336-96da4a00-c164-11ea-8624-dd8d9cdf151d.png)
 
-NODE 정보
-----
+##### 노드 정보
 | node name | ip | container|
 | :-----:| :-----------: | :------------:|
 | node1    |192.168.249.11  | orderer |
@@ -40,4 +40,22 @@ NODE 정보
 </code>
 </pre>
 
+# 11
+# 22
+이것을 **강조합니다.
 
+이게 \*\*Text\*\*__  뭐죠
+
+``` c
+int val = 10;
+printf(%s,"Hello, World!");
+```
+
+```javascript 
+function test() { 
+ console.log("hello world!"); 
+} 
+```
+
+- [x] 체크박스
+- [ ] 체크박스
