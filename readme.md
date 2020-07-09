@@ -20,6 +20,14 @@ HyperLedger Multi-Host 구성하기
 
 NODE 정보
 ----
+| NODE  | ip | container|
+| :-----| :-----------: | :------------|
+| node1    |192.168.249.11  | orderer |
+| node2    |192.168.249.12  | orderer2, peer0, couchdb, cli |
+| node3    |192.168.249.13  | orderer3, peer1, couchdb, cli |
+| node4    |192.168.249.14  | peer3, couchdb, cli |
+| node5    |192.168.249.15  | peer4, couchdb, cli |
+
 <pre>
 <code>
 1. node1 - 192.168.249.11
