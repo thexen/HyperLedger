@@ -9,7 +9,9 @@ HyperLedger Multi-Host 구성하기
   * host name 설정
   * docker swarm 설정
   * overlay network 설정
-* channel-artifacts, crypto-config 
+* channel-artifacts, crypto-config 생성 및 복제
+* Oderer deploy
+* peer deploy
 
   
 개요
@@ -189,6 +191,12 @@ $./byfn.sh generate
 ![gen](https://user-images.githubusercontent.com/15353753/87034141-550fd900-c222-11ea-936a-b213a3f6eb19.png)
    * **channel-artifacts, crypto-config**의 폴더가 생성 되었습니다.
    * 생성된 두 폴더는 node1의 경로와 동일한 경로로 node2,node3,node4,node5에 복사를 합니다.
+orderer deploy
+----
+
+peer deploy
+----
+
 
 <pre>
 <code>
