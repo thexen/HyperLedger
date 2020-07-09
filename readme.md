@@ -30,13 +30,53 @@ HyperLedger Multi-Host 구성하기
 
 준비 작업
 ----
+### Host name 설정
+host name이 중복되지 않도록 설정합니다.
+
+```sh 
+#명령어
+$hostnamectl set-hostname [newname]
+```
+```sh 
+#192.168.249.11
+$hostnamectl set-hostname node1
+```
+```sh 
+#192.168.249.12
+$hostnamectl set-hostname node2
+```
+```sh 
+#192.168.249.13
+$hostnamectl set-hostname node3
+```
+```sh 
+#192.168.249.14
+$hostnamectl set-hostname node4
+```
+```sh 
+#192.168.249.15
+$hostnamectl set-hostname node5
+```
+
+### Docker Swarm 설정
+- initialize swarm
+```sh 
+#node1
+$docker swarm init
+```
+- swarm manager 등록
+```sh 
+#node1
+$docker swarm join-token manager
+```
+
 <pre>
 <code>
-1. node1 - 192.168.249.11
-2. node2 - 192.168.249.12
-3. node3 - 192.168.249.13
-4 .node4 - 192.168.249.14
-5. node5 - 192.168.249.15
+1. 192.168.249.11 - node1
+2. 192.168.249.12 - node2
+3. 192.168.249.13 - node3
+4  192.168.249.14 - node4
+5. 192.168.249.15 - node5
 </code>
 </pre>
 
