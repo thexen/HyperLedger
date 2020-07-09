@@ -65,18 +65,22 @@ $hostnamectl set-hostname node5
 $docker swarm init
 ```
 - swarm manager 등록
-![node ls](https://user-images.githubusercontent.com/15353753/87030750-057ade80-c21d-11ea-941f-700288214381.png)
-
+```sh 
+#node1
+$ocker swarm join-token manager
+```
+![enroll](https://user-images.githubusercontent.com/15353753/87030247-4c1c0900-c21c-11ea-8176-6158f550f2aa.png)
 ```sh 
 #node2,node3,node4,node5
 $docker swarm join --token SWMTKN-1-39iqem217lt0fv4t1b7qs130jtynxw22bcpz5tch3dhcrr6svj-462ko5j185o3an0iumy7sqyy9 192.168.249.11:2377
 ```
+
 - join 확인
 ```sh 
 #node1
 $docker node ls
 ```
-![enroll](https://user-images.githubusercontent.com/15353753/87030247-4c1c0900-c21c-11ea-8176-6158f550f2aa.png)
+![node ls](https://user-images.githubusercontent.com/15353753/87030750-057ade80-c21d-11ea-941f-700288214381.png)
 
 <pre>
 <code>
