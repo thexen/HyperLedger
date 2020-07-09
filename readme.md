@@ -197,7 +197,7 @@ $./byfn.sh generate
 
 git repogitory clone 
 ----
-- git clone으로 yaml 파일을 내려 받는다.
+- git clone으로 yaml 파일을 내려 받습니다.
 ```sh 
 #node1
 $ git clone https://github.com/thexen/HyperLedger.git
