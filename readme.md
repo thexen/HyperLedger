@@ -95,7 +95,61 @@ $docker network ls
 channel-artifacts, crypto-config 생성
 ----
 > first-network의 byfn.sh를 사용하여 channel-artifacts, crypto-config를 생성 하도록 하겠습니다
+> fabric-samples가 설치 되어있는 폴더로 이동합니다.
+```sh 
+#node1
+$pwd
+/home/root/prj/fabric/fabric-samples-master/first-network
+```
 - channel-artifacts 생성을 위한 설정
+   - configtx.yam 파일을 열어 Profiles 섹션을 수정합니다.
+   - 샘플에서 제공하는 oderer는 5개이지만 우리들이 사용할 oderer는 3개이므로 2개를 비활성화 하도록 합니다.
+```sh 
+#node1
+$vi configtx.yaml
+.
+.
+.
+
+    SampleMultiNodeEtcdRaft:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: etcdraft
+            EtcdRaft:
+                Consenters:
+                - Host: orderer.example.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+                - Host: orderer2.example.com
+                  Port: 8050
+                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
+                - Host: orderer3.example.com
+                  Port: 9050
+                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
+                #- Host: orderer4.example.com
+                 # Port: 10050
+                 # ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
+                 # ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
+                #- Host: orderer5.example.com
+                 # Port: 11050
+                 # ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
+                 # ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
+            Addresses:
+                - orderer.example.com:7050
+                - orderer2.example.com:8050
+                - orderer3.example.com:9050
+                #- orderer4.example.com:10050
+                #- orderer5.example.com:11050
+.
+.
+.
+```
 - crypto-config 생성을 위한 설정
 - byfn.sh 실행
 ```sh 
