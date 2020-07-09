@@ -10,6 +10,7 @@ HyperLedger Multi-Host 구성하기
   * docker swarm 설정
   * overlay network 설정
 * artifacts,MSP(channel-artifacts, crypto-config) 준비작업
+* git repogitory clone 
 * Oderer deploy
 * peer deploy
 
@@ -194,6 +195,13 @@ $./byfn.sh generate
    
 **artifacts, msp 준비 완료**
 
+git repogitory clone 
+----
+- git clone으로 yaml 파일을 내려 받는다.
+```sh 
+#node1
+$ git clone https://github.com/thexen/HyperLedger.git
+```
 orderer deploy
 ----
 
