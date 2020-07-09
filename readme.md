@@ -69,6 +69,12 @@ $docker swarm init
 #node1
 $docker swarm join-token manager
 ```
+![enroll](https://user-images.githubusercontent.com/15353753/87030247-4c1c0900-c21c-11ea-8176-6158f550f2aa.png)
+
+```sh 
+#node2,node3,node4,node5
+$docker swarm join --token SWMTKN-1-39iqem217lt0fv4t1b7qs130jtynxw22bcpz5tch3dhcrr6svj-462ko5j185o3an0iumy7sqyy9 192.168.249.11:2377
+```
 
 <pre>
 <code>
