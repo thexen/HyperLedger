@@ -205,6 +205,7 @@ git repogitory clone
 $ git clone https://github.com/thexen/HyperLedger.git
 ```
 ![image](https://user-images.githubusercontent.com/15353753/87144393-a8496080-c2e2-11ea-92e1-4aed216d7746.png)
+
 orderer yaml 파일 설정
 ----
 * orderer.yaml, orderer2.yaml, orderer3.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
@@ -366,7 +367,6 @@ $ peer channel join -b mychannel.block
 > Error: genesis block file not found open mychannel.block: no such file or directory라 출력 된다면 
 > node2:cli(peer0-cli)의 mychannel.black를 node3,node4,node5의 cli로 복사하면 해결 될 것입니다.
 
- 
 chain code
 ----
 1. package
@@ -436,38 +436,10 @@ $peer lifecycle chaincode commit -o orderer.example.com:7050 --tls --cafile /opt
 * 정상적으로 commit이 되었다면 docker container가 추가되어 실행 된 것을 확인 할 수 있을 겁니다.
 
 
-<pre>
-<code>
-1. 192.168.249.11 - node1
-2. 192.168.249.12 - node2
-3. 192.168.249.13 - node3
-4  192.168.249.14 - node4
-5. 192.168.249.15 - node5
-</code>
-</pre>
-
-# 11
-# 22
-이것을 **강조**합니다.
-
-
-``` c
-int val = 10;
-printf(%s,"Hello, World!");
-```
-
-```javascript 
-function test() { 
- console.log("hello world!"); 
-} 
-```
-
-- [x] 체크박스
-- [ ] 체크박스
-
-
+```sh 
    $ sudo firewall-cmd --add-port=2377/tcp --permanent
    $ sudo firewall-cmd --add-port=7946/tcp --permanent
    $ sudo firewall-cmd --add-port=7946/udp --permanent
    $ sudo firewall-cmd --add-port=4789/udp –permanent
    $ sudo firewall-cmd --reload
+```
