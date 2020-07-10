@@ -202,8 +202,36 @@ git repogitory clone
 #node1
 $ git clone https://github.com/thexen/HyperLedger.git
 ```
+![image](https://user-images.githubusercontent.com/15353753/87144393-a8496080-c2e2-11ea-92e1-4aed216d7746.png)
 orderer deploy
 ----
+* orderer.yaml, orderer2.yaml, orderer3.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
+* **channel-artifacts, crypto-config**이 생성된 path를 입력 합니다. 
+
+```sh 
+#node1
+$vi orderer.yaml
+version: '3'
+
+volumes:
+  orderer.example.com:
+
+networks:
+  fabric:
+    external:
+      name: fabric
+
+.
+.
+.
+  volumes:
+      - /home/root/prj/fabric/fabric-samples-master/first-network/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - /home/root/prj/fabric/fabric-samples-master/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/:/var/hyperledger/orderer/msp/
+      - /home/root/prj/fabric/fabric-samples-master/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls/
+.
+.
+.
+```
 
 peer deploy
 ----
