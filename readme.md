@@ -304,6 +304,69 @@ $ dokcer service ls
 - 아래 그림과 같이 보이면 성공적으로 container를 실행 한 것입니다.
  ![image](https://user-images.githubusercontent.com/15353753/87147275-4c350b00-c2e7-11ea-873a-b6a9700a14f3.png)
  
+create channel
+----
+1. node2로 접속합니다.
+2. cli의 container id를 구한 후 container를 실행합니다
+3. mychannel을 생성합니다.
+```sh 
+#node2
+$ dokcer ps
+```
+![image](https://user-images.githubusercontent.com/15353753/87163575-865fd600-c302-11ea-9179-5b678ffbe564.png)
+
+```sh 
+#node2
+$dokcer exec -it 242e40642972 bash
+#node2: cli
+peer channel create -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+```
+* 생성된 mychannel.block 파일을 node3, node4, node5의 cli로 복사를 해야 합니다. 그럴려면 node2:cli(peer0-cli)에 있는 mychannel.block을 host로 복사 한 후 host에서 node3, node4, node5의 cli로 복사 합니다.
+>container에서 host로 파일 복사 방법: pdocker cp [from-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
+
+```sh 
+#node2
+$ pdocker cp 242e40642972:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
+```
+* host로 복사된 mychannel.block 파일을 node3, node4, node5의 host로 복사 한 후 cli로 다시 복사 합니다
+* node3, node4, node5의 host로 복사를 하였다고 가정하고 다음 명령어를 실행 합니다.
+```sh 
+#node3
+$ docker cp mychannel.block [to-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block
+```
+```sh 
+#node4
+$ docker cp mychannel.block [to-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block
+```
+```sh 
+#node5
+$ docker cp mychannel.block [to-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block
+```
+
+* mychannel.block 파일은 /opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block 에 있습니다.
+
+join channel
+----
+```sh 
+#node2: cli
+$ peer channel join -b mychannel.block
+```
+```sh 
+#node3: cli
+$ peer channel join -b mychannel.block
+```
+```sh 
+#node4: cli
+$ peer channel join -b mychannel.block
+```
+```sh 
+#node4: cli
+$ peer channel join -b mychannel.block
+```
+> Error: genesis block file not found open mychannel.block: no such file or directory라 출력 된다면 
+> node2:cli(peer0-cli)의 mychannel.black를 node3,node4,node5의 cli로 복사하면 해결 될 것입니다.
+
+ 
 chain code
 ----
 1. package
@@ -313,7 +376,66 @@ chain code
 #node2
 $ dokcer ps
 ```
+![image](https://user-images.githubusercontent.com/15353753/87163575-865fd600-c302-11ea-9179-5b678ffbe564.png)
+
+```sh 
+#node2
+$dokcer exec -it 242e40642972 bash
+```
+> scripts/utils.sh 의 packageChaincode() 참고
+
+> peer lifecycle chaincode package ${ChainCodeName}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${ChainCodeName}_${VERSION}
+
+```sh 
+#node2: cli
+$peer lifecycle chaincode package mycc.tar.gz --path github.com/hyperledger/fabric-samples/chaincode/abstore/go/ --lang golang --label mycc_1
+```
+* 생성된 package 파일 mycc.tar.gz를 node3:cli, node4:cli, node5:cli의 working_dir로 복사 하거나 node3:cli, node4:cli, node5:cli에서도 package를 합니다.
+
+2. install
+> scripts/utils.sh 의 installChaincode() 참고
  
+> peer lifecycle chaincode install ${ChainCodeName}.tar.gz
+
+```sh 
+#node2:cli, node3:cli, node4:cli, node5:cli
+$peer lifecycle chaincode install mycc.tar.gz 
+ ```
+ 
+3. install 확인 및 package id 획득
+```sh 
+#node2:cli, node3:cli, node4:cli, node5:cli
+$peer lifecycle chaincode queryinstalled 
+ ```
+
+4. Approve for org(승인)
+>  scripts/utils.sh 의 approveForMyOrg(() 참고
+
+> peer lifecycle chaincode approveformyorg --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${ChainCodeName} --version ${VERSION} --init-required --package-id ${PACKAGE_ID} --sequence ${VERSION} --waitForEvent 
+
+```sh 
+#node2:cli, node3:cli, node4:cli, node5:cli
+$peer lifecycle chaincode approveformyorg --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name mycc --version 1 --init-required --package-id mmycc_1:045aa77006e2ef1efeb7d91763914cf7453718cffd56088536f43276cfc1843e --sequence 1 --waitForEvent 
+ ```
+5. Approve 상태 확인
+> scripts/utils.sh 의 checkCommitReadiness() 참고
+ 
+> peer lifecycle chaincode checkcommitreadiness --channelID $CHANNEL_NAME --name ${ChainCodeName} $PEER_CONN_PARMS --version ${VERSION} --sequence ${VERSION} --output json --init-required
+ ```sh 
+#node2:cli, node3:cli, node4:cli, node5:cli
+$peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name mycc --version 1 --sequence 1 --output json --init-required
+ ```
+6. commit
+> scripts/utils.sh 의 commitChaincodeDefinition() 참고
+ 
+> peer lifecycle chaincode querycommitted --channelID $CHANNEL_NAME --name mycc
+```sh 
+#node2:cli, node3:cli, node4:cli, node5:cli
+$peer lifecycle chaincode commit -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --version 1 --sequence 1 --init-required
+```
+* 정상적으로 commit이 되었다면 docker container가 추가되어 실행 된 것을 확인 할 수 있을 겁니다.
+
+
 <pre>
 <code>
 1. 192.168.249.11 - node1
