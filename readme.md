@@ -322,15 +322,15 @@ $dokcer exec -it 242e40642972 bash
 #node2: cli
 peer channel create -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
-* 생성된 mychannel.block 파일을 node3, node4, node5의 cli로 복사를 해야 합니다. 그럴려면 node2:cli(peer0-cli)에 있는 mychannel.block을 host로 복사 한 후 host에서 node3, node4, node5의 cli로 복사 합니다.
->container에서 host로 파일 복사 방법: pdocker cp [from-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
+* 생성된 mychannel.block 파일을 node3, node4, node5의 cli로 복사해야 합니다. 그럴려면 node2:cli(peer0-cli)에 있는 mychannel.block을 host로 복사 한 후 host에서 node3, node4, node5의 cli로 다시 복사 합니다.
+>container에서 host로 복사하는 방법: docker cp [from-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
 
 ```sh 
 #node2
 $ pdocker cp 242e40642972:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
 ```
 * host로 복사된 mychannel.block 파일을 node3, node4, node5의 host로 복사 한 후 cli로 다시 복사 합니다
-* node3, node4, node5의 host로 복사를 하였다고 가정하고 다음 명령어를 실행 합니다.
+* node3, node4, node5의 host로 복사 하였다고 가정하고 다음 명령어를 실행 합니다.
 ```sh 
 #node3
 $ docker cp mychannel.block [to-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block
@@ -390,7 +390,7 @@ $dokcer exec -it 242e40642972 bash
 #node2: cli
 $peer lifecycle chaincode package mycc.tar.gz --path github.com/hyperledger/fabric-samples/chaincode/abstore/go/ --lang golang --label mycc_1
 ```
-* 생성된 package 파일 mycc.tar.gz를 node3:cli, node4:cli, node5:cli의 working_dir로 복사 하거나 node3:cli, node4:cli, node5:cli에서도 package를 합니다.
+* 생성된 package 파일 mycc.tar.gz를 node3:cli, node4:cli, node5:cli의 working_dir로 복사 하거나 node3:cli, node4:cli, node5:cli에서도 package 합니다.
 
 2. install
 > scripts/utils.sh 의 installChaincode() 참고
