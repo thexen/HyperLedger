@@ -306,6 +306,13 @@ $ dokcer service ls
  
 chain code
 ----
+1. package
+* node2로 접속합니다.
+* cli의 container id를 구한 후 container를 실행합니다
+```sh 
+#node2
+$ dokcer ps
+```
  
 <pre>
 <code>
