@@ -13,7 +13,8 @@ HyperLedger Multi-Host 구성하기
 * git repogitory clone 
 * Oderer yaml 파일 설정
 * peer yaml 파일 
-* 
+* yaml 파일 deploy
+* chain code 
 
   
 개요
@@ -295,6 +296,16 @@ $ docker stack deploy -c docker-compse-peer1-org1.yaml fabric
 $ docker stack deploy -c docker-compse-peer0-org2.yaml fabric
 $ docker stack deploy -c docker-compse-peer1-org2.yaml fabric
 ```
+- 실행 확인
+```sh 
+#node1
+$ dokcer service ls
+```
+- 아래 그림과 같이 보이면 성공적으로 container를 실행 한 것입니다.
+ ![image](https://user-images.githubusercontent.com/15353753/87147275-4c350b00-c2e7-11ea-873a-b6a9700a14f3.png)
+ 
+  chain code
+----
  
 <pre>
 <code>
