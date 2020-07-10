@@ -367,6 +367,15 @@ $ peer channel join -b mychannel.block
 > Error: genesis block file not found open mychannel.block: no such file or directory라 출력 된다면 
 > node2:cli(peer0-cli)의 mychannel.black를 node3,node4,node5의 cli로 복사하면 해결 될 것입니다.
 
+anchor peer 설정
+----
+```sh 
+#node2:cli
+$ peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+#node4:cli
+$peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org2MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+```
+
 chain code
 ----
 1. package
