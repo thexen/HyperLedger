@@ -11,8 +11,9 @@ HyperLedger Multi-Host 구성하기
   * overlay network 설정
 * artifacts,MSP(channel-artifacts, crypto-config) 준비작업
 * git repogitory clone 
-* Oderer deploy
-* peer deploy
+* Oderer yaml 파일 설정
+* peer yaml 파일 
+* 
 
   
 개요
@@ -203,14 +204,14 @@ git repogitory clone
 $ git clone https://github.com/thexen/HyperLedger.git
 ```
 ![image](https://user-images.githubusercontent.com/15353753/87144393-a8496080-c2e2-11ea-92e1-4aed216d7746.png)
-orderer deploy
+orderer yaml 파일 설정
 ----
 * orderer.yaml, orderer2.yaml, orderer3.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
 * **channel-artifacts, crypto-config**이 생성된 path를 입력 합니다. 
 
 ```sh 
 #node1
-$vi orderer.yaml
+$vi docker-compose-orderer.yaml
 version: '3'
 
 volumes:
@@ -232,11 +233,69 @@ networks:
 .
 .
 ```
+![image](https://user-images.githubusercontent.com/15353753/87145566-7933ee80-c2e4-11ea-9987-64992b9cd118.png)
 
-peer deploy
+peer yaml 파일 설정
 ----
+- peer0-org1.yaml, peer1-org1.yaml, peer0-org2.yaml, peer1-org2.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
+- service peer0 와 peer0-cli 의 volumes를 orderer와 동일하게 설정합니다
+```sh 
+#node1
+$ vi docker-compse-peer0-org1.yaml
+.
+.
+.
 
+############################################################################################
+#Peer: Peer0
+############################################################################################
+  peer0:
+    image: hyperledger/fabric-peer:2.1
+.
+.
+.
+    volumes:
+    - /var/run/:/host/var/run/
+    - /home/root/prj/fabric/fabric-samples-master/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/:/etc/hyperledger/fabric/msp/
+    - /home/root/prj/fabric/fabric-samples-master/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/:/etc/hyperledger/fabric/tls/
+    - peer0.org1.example.com:/var/hyperledger/production
+.
+.
+.
+############################################################################################
+#cli:
+############################################################################################
+  peer0-cli:
+.
+.
+.
+    volumes:
+        - /var/run/:/host/var/run/
+        - /home/root/prj/fabric/fabric-samples-master/chaincode/:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
+        - /home/root/prj/fabric/fabric-samples-master/first-network/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - /home/root/prj/fabric/fabric-samples-master/first-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - /home/root/prj/fabric/fabric-samples-master/first-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+.
+.
+.
+```
 
+deploy
+----
+ - docker-compse 파일이 준비가 다 되었습니다.
+ - 이제 container를 올려 보도록 하겠습니다.
+ - docker stack deploy -c [yaml 파일 이름] fabric 을 사용하면 yaml 파일에서 설정한 node에 container가 실행됩니다.
+ ```sh 
+#node1
+$ docker stack deploy -c docker-compose-orderer.yaml fabric
+$ docker stack deploy -c docker-compose-orderer2.yaml fabric
+$ docker stack deploy -c docker-compose-orderer3.yaml fabric
+$ docker stack deploy -c docker-compse-peer0-org1.yaml fabric
+$ docker stack deploy -c docker-compse-peer1-org1.yaml fabric
+$ docker stack deploy -c docker-compse-peer0-org2.yaml fabric
+$ docker stack deploy -c docker-compse-peer1-org2.yaml fabric
+```
+ 
 <pre>
 <code>
 1. 192.168.249.11 - node1
