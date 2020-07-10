@@ -304,7 +304,7 @@ $ dokcer service ls
 - 아래 그림과 같이 보이면 성공적으로 container를 실행 한 것입니다.
  ![image](https://user-images.githubusercontent.com/15353753/87147275-4c350b00-c2e7-11ea-873a-b6a9700a14f3.png)
  
-  chain code
+chain code
 ----
  
 <pre>
