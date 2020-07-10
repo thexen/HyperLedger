@@ -415,7 +415,7 @@ $peer lifecycle chaincode queryinstalled
 
 ```sh 
 #node2:cli, node3:cli, node4:cli, node5:cli
-$peer lifecycle chaincode approveformyorg --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name mycc --version 1 --init-required --package-id mmycc_1:045aa77006e2ef1efeb7d91763914cf7453718cffd56088536f43276cfc1843e --sequence 1 --waitForEvent 
+$peer lifecycle chaincode approveformyorg --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name mycc --version 1 --init-required --package-id mycc_1:045aa77006e2ef1efeb7d91763914cf7453718cffd56088536f43276cfc1843e --sequence 1 --waitForEvent 
  ```
 5. Approve 상태 확인
 > scripts/utils.sh 의 checkCommitReadiness() 참고
