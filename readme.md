@@ -65,6 +65,20 @@ $hostnamectl set-hostname node4
 $hostnamectl set-hostname node5
 ```
 
+- swarm 설정을 위한 포트를 개방 합니다.
+```sh 
+   $ sudo firewall-cmd --add-port=2377/tcp --permanent
+   $ sudo firewall-cmd --add-port=7946/tcp --permanent
+   $ sudo firewall-cmd --add-port=7946/udp --permanent
+   $ sudo firewall-cmd --add-port=4789/udp --permanent   
+```
+
+- host의 date를 동기화 시킵니다
+
+```sh 
+   $ date -s 'yyyy-mm-dd hh:mm:ss'   
+```   
+
 ### Docker Swarm 설정
 - initialize swarm
 ```sh 
