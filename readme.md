@@ -467,3 +467,7 @@ $peer lifecycle chaincode commit -o orderer.example.com:7050 --tls --cafile /opt
    $ sudo firewall-cmd --add-port=4789/udp --permanent
    $ sudo firewall-cmd --reload
 ```
+
+```sh 
+docker volume rm $(docker volume ls -qf dangling=true)
+```
