@@ -74,7 +74,7 @@ $docker swarm init
 - swarm manager 등록
 ```sh 
 #node1
-$ocker swarm join-token manager
+$docker swarm join-token manager
 ```
 ![enroll](https://user-images.githubusercontent.com/15353753/87030247-4c1c0900-c21c-11ea-8176-6158f550f2aa.png)
 ```sh 
