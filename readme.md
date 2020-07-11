@@ -450,6 +450,6 @@ $peer lifecycle chaincode commit -o orderer.example.com:7050 --tls --cafile /opt
    $ sudo firewall-cmd --add-port=2377/tcp --permanent
    $ sudo firewall-cmd --add-port=7946/tcp --permanent
    $ sudo firewall-cmd --add-port=7946/udp --permanent
-   $ sudo firewall-cmd --add-port=4789/udp –permanent
+   $ sudo firewall-cmd --add-port=4789/udp --permanent
    $ sudo firewall-cmd --reload
 ```
