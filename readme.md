@@ -306,10 +306,10 @@ deploy
 $ docker stack deploy -c docker-compose-orderer.yaml fabric
 $ docker stack deploy -c docker-compose-orderer2.yaml fabric
 $ docker stack deploy -c docker-compose-orderer3.yaml fabric
-$ docker stack deploy -c docker-compse-peer0-org1.yaml fabric
-$ docker stack deploy -c docker-compse-peer1-org1.yaml fabric
-$ docker stack deploy -c docker-compse-peer0-org2.yaml fabric
-$ docker stack deploy -c docker-compse-peer1-org2.yaml fabric
+$ docker stack deploy -c docker-compose-peer0-org1.yaml fabric
+$ docker stack deploy -c docker-compose-peer1-org1.yaml fabric
+$ docker stack deploy -c docker-compose-peer0-org2.yaml fabric
+$ docker stack deploy -c docker-compose-peer1-org2.yaml fabric
 ```
 - 실행 확인
 ```sh 
