@@ -348,6 +348,9 @@ $ peer channel create -o orderer.example.com:7050 -c mychannel -f ./channel-arti
 #node2
 $ pocker cp caefcfbaca7:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
 ```
+
+![image](https://user-images.githubusercontent.com/15353753/87238112-51a26a80-c439-11ea-826b-b729f9587159.png)
+
 * host로 복사된 mychannel.block 파일을 node3, node4, node5의 host로 복사 한 후 cli로 다시 복사 합니다
 * node3, node4, node5의 host로 복사 하였다고 가정하고 다음 명령어를 실행 합니다.
 ```sh 
