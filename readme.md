@@ -425,6 +425,9 @@ chain code
 #node2: cli
 $peer lifecycle chaincode package mycc.tar.gz --path github.com/hyperledger/fabric-samples/chaincode/abstore/go/ --lang golang --label mycc_1
 ```
+
+![image](https://user-images.githubusercontent.com/15353753/87238308-e6a66300-c43b-11ea-9994-61fb9b3254a2.png)
+
 * 생성된 package 파일 mycc.tar.gz를 node3:cli, node4:cli, node5:cli의 working_dir로 복사 하거나 node3:cli, node4:cli, node5:cli에서도 package 합니다.
 
 2. install
