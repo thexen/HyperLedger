@@ -440,6 +440,8 @@ $peer lifecycle chaincode package mycc.tar.gz --path github.com/hyperledger/fabr
 $peer lifecycle chaincode install mycc.tar.gz 
  ```
  
+ ![image](https://user-images.githubusercontent.com/15353753/87238364-a1366580-c43c-11ea-9f00-d2aa1d57e04e.png)
+ 
 3. install 확인 및 package id 획득
 ```sh 
 #node2:cli, node3:cli, node4:cli, node5:cli
