@@ -535,6 +535,7 @@ http://192.168.249.12:8984/_utils/
 >> 이동
 http://192.168.249.12:8984/_utils/#database/mychannel_mycc/_all_docs
 ```
+![image](https://user-images.githubusercontent.com/15353753/87239863-e499cf80-c44e-11ea-9fab-5f6692e0e945.png)
 
 ----
 
