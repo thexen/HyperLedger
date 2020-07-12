@@ -448,6 +448,8 @@ $peer lifecycle chaincode install mycc.tar.gz
 $peer lifecycle chaincode queryinstalled 
  ```
 
+![image](https://user-images.githubusercontent.com/15353753/87238437-70a2fb80-c43d-11ea-8791-edc2cc277930.png)
+
 4. Approve for org(승인)
 >  scripts/utils.sh 의 approveForMyOrg(() 참고
 
