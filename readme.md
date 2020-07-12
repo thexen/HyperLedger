@@ -377,6 +377,9 @@ join channel
 #node2: cli
 $ peer channel join -b mychannel.block
 ```
+
+![image](https://user-images.githubusercontent.com/15353753/87238214-b9a58080-c43a-11ea-9b71-78868930dfd5.png)
+
 ```sh 
 #node3: cli
 $ peer channel join -b mychannel.block
