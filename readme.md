@@ -516,6 +516,19 @@ $peer lifecycle chaincode commit -o orderer.example.com:7050 --tls --cafile /opt
 
 * 정상적으로 commit이 되었다면 docker container가 추가되어 실행 된 것을 확인 할 수 있을 겁니다.
 
+### 7. test : invoke
+```sh 
+#node2:cli
+peer chaincode invoke -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt  --isInit -c '{"Args":["Init","a","100","b","100"]}'
+```
+
+![image](https://user-images.githubusercontent.com/15353753/87238943-2a9d6600-c444-11ea-9515-8ce7077af312.png)
+
+### 8. couchDB 확인
+```sh 
+http://192.168.249.12:8984/_utils/
+```
+
 ----
 
 utilz
