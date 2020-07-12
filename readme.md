@@ -532,6 +532,8 @@ $peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
 ### 9. couchDB 확인
 ```sh 
 http://192.168.249.12:8984/_utils/
+>> 이동
+http://192.168.249.12:8984/_utils/#database/mychannel_mycc/_all_docs
 ```
 
 ----
