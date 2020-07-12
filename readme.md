@@ -98,6 +98,8 @@ $hostnamectl set-hostname node5
    $ date -s 'yyyy-mm-dd hh:mm:ss'   
 ```   
 
+----
+
 ### Docker Swarm 설정
 - port 해방
 ```sh 
@@ -252,10 +254,10 @@ $ git clone https://github.com/thexen/HyperLedger.git
 ```
 ![image](https://user-images.githubusercontent.com/15353753/87144393-a8496080-c2e2-11ea-92e1-4aed216d7746.png)
 
-orderer yaml 파일 설정
-----
-* orderer.yaml, orderer2.yaml, orderer3.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
-* **channel-artifacts, crypto-config**이 생성된 path를 입력 합니다. 
+### orderer yaml 파일 설정
+
+- orderer.yaml, orderer2.yaml, orderer3.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
+- **channel-artifacts, crypto-config**이 생성된 path를 입력 합니다. 
 
 ```sh 
 #node1
@@ -283,8 +285,8 @@ networks:
 ```
 ![image](https://user-images.githubusercontent.com/15353753/87145566-7933ee80-c2e4-11ea-9987-64992b9cd118.png)
 
-peer yaml 파일 설정
-----
+### peer yaml 파일 설정
+
 - peer0-org1.yaml, peer1-org1.yaml, peer0-org2.yaml, peer1-org2.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
 - service peer0 와 peer0-cli 의 volumes를 orderer와 동일하게 설정합니다
 ```sh 
@@ -328,8 +330,8 @@ $ vi docker-compse-peer0-org1.yaml
 .
 ```
 
-deploy
-----
+### deploy
+
  - docker-compse 파일이 준비가 다 되었습니다.
  - 이제 container를 올려 보도록 하겠습니다.
  - docker stack deploy -c [yaml 파일 이름] fabric 을 사용하면 yaml 파일에서 설정한 node에 container가 실행됩니다.
@@ -353,8 +355,8 @@ $ dokcer service ls
  
 ----
  
-create channel
-----
+### create channel
+
 1. node2로 접속합니다.
 2. cli의 container id를 구한 후 container를 실행합니다
 3. mychannel을 생성합니다.
@@ -402,8 +404,8 @@ $ docker cp mychannel.block [to-containerid]:/opt/gopath/src/github.com/hyperled
 
 * mychannel.block 파일은 /opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block 에 있습니다.
 
-join channel
-----
+### join channel
+
 ```sh 
 #node2: cli
 $ peer channel join -b mychannel.block
@@ -426,8 +428,8 @@ $ peer channel join -b mychannel.block
 > Error: genesis block file not found open mychannel.block: no such file or directory라 출력 된다면 
 > node2:cli(peer0-cli)의 mychannel.black를 node3,node4,node5의 cli로 복사하면 해결 될 것입니다.
 
-anchor peer 설정
-----
+### anchor peer 설정
+
 ```sh 
 #node2:cli
 $ peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
@@ -444,7 +446,7 @@ $peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artif
 
 chain code
 ----
-1. package
+### 1. package
 * node2로 접속합니다.
 * cli의 container id를 구한 후 container를 실행합니다
 
@@ -461,7 +463,7 @@ $peer lifecycle chaincode package mycc.tar.gz --path github.com/hyperledger/fabr
 
 * 생성된 package 파일 mycc.tar.gz를 node3:cli, node4:cli, node5:cli의 working_dir로 복사 하거나 node3:cli, node4:cli, node5:cli에서도 package 합니다.
 
-2. install
+### 2. install
 > scripts/utils.sh 의 installChaincode() 참고
  
 > peer lifecycle chaincode install ${ChainCodeName}.tar.gz
@@ -473,7 +475,7 @@ $peer lifecycle chaincode install mycc.tar.gz
  
  ![image](https://user-images.githubusercontent.com/15353753/87238364-a1366580-c43c-11ea-9f00-d2aa1d57e04e.png)
  
-3. install 확인 및 package id 획득
+### 3. install 확인 및 package id 획득
 ```sh 
 #node2:cli, node3:cli, node4:cli, node5:cli
 $peer lifecycle chaincode queryinstalled 
@@ -481,7 +483,7 @@ $peer lifecycle chaincode queryinstalled
 
 ![image](https://user-images.githubusercontent.com/15353753/87238437-70a2fb80-c43d-11ea-8791-edc2cc277930.png)
 
-4. Approve for org(승인)
+### 4. Approve for org(승인)
 >  scripts/utils.sh 의 approveForMyOrg(() 참고
 
 > peer lifecycle chaincode approveformyorg --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${ChainCodeName} --version ${VERSION} --init-required --package-id ${PACKAGE_ID} --sequence ${VERSION} --waitForEvent 
@@ -494,7 +496,7 @@ $peer lifecycle chaincode approveformyorg --tls --cafile /opt/gopath/src/github.
  
  ![image](https://user-images.githubusercontent.com/15353753/87238479-d7c0b000-c43d-11ea-8db4-be900fa57532.png)
  
-5. Approve 상태 확인
+### 5. Approve 상태 확인
 > scripts/utils.sh 의 checkCommitReadiness() 참고
  
 > peer lifecycle chaincode checkcommitreadiness --channelID $CHANNEL_NAME --name ${ChainCodeName} $PEER_CONN_PARMS --version ${VERSION} --sequence ${VERSION} --output json --init-required
@@ -505,7 +507,7 @@ $peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name mycc
  
  ![image](https://user-images.githubusercontent.com/15353753/87238497-03439a80-c43e-11ea-8291-b021578dd78a.png)
  
-6. commit
+### 6. commit
 > scripts/utils.sh 의 commitChaincodeDefinition() 참고
  
 > peer lifecycle chaincode querycommitted --channelID $CHANNEL_NAME --name mycc
@@ -523,7 +525,7 @@ $peer lifecycle chaincode commit -o orderer.example.com:7050 --tls --cafile /opt
 
 utilz
 ----
-* 사용하지 않는 volume 삭제
+### 사용하지 않는 volume 삭제
 ```sh 
 docker volume rm $(docker volume ls -qf dangling=true)
 ```
