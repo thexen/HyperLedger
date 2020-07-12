@@ -330,14 +330,13 @@ create channel
 ```sh 
 #node2
 $ dokcer ps
+$ dokcer exec -it caefcfbaca7b bash
 ```
-![image](https://user-images.githubusercontent.com/15353753/87163575-865fd600-c302-11ea-9179-5b678ffbe564.png)
+![image](https://user-images.githubusercontent.com/15353753/87237997-e73cfa80-c437-11ea-9494-0638a1fb5751.png)
 
 ```sh 
-#node2
-$dokcer exec -it 242e40642972 bash
 #node2: cli
-peer channel create -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+$ peer channel create -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 * 생성된 mychannel.block 파일을 node3, node4, node5의 cli로 복사해야 합니다. 그럴려면 node2:cli(peer0-cli)에 있는 mychannel.block을 host로 복사 한 후 host에서 node3, node4, node5의 cli로 다시 복사 합니다.
 >container에서 host로 복사하는 방법: docker cp [from-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
