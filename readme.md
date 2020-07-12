@@ -357,6 +357,9 @@ $ pocker cp caefcfbaca7:/opt/gopath/src/github.com/hyperledger/fabric/peer/mycha
 #node3
 $ docker cp mychannel.block [to-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block
 ```
+
+![image](https://user-images.githubusercontent.com/15353753/87238177-3552fd80-c43a-11ea-85ab-e9d61d937bc9.png)
+
 ```sh 
 #node4
 $ docker cp mychannel.block [to-containerid]:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block
