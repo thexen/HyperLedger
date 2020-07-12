@@ -7,12 +7,12 @@ HyperLedger Multi-Host 구성하기
    * node별 container 구성
    * node 정보  
    
-* 인프라 준비작업
+* 인프라 준비
   * host name 설정
   * docker swarm 설정
   * overlay network 설정
   
-* artifacts,MSP(channel-artifacts, crypto-config) 준비작업
+* artifacts,MSP(channel-artifacts, crypto-config) 준비
 
 * git repogitory clone 
    * Oderer yaml 파일 설정
@@ -57,7 +57,7 @@ HyperLedger Multi-Host 구성하기
 | node4    |192.168.249.14  | peer3, couchdb, cli |
 | node5    |192.168.249.15  | peer4, couchdb, cli |
 
-준비 작업
+인프라 준비
 ----
 ### 1. Host name 설정
 host name이 중복되지 않도록 설정합니다.
@@ -135,7 +135,7 @@ $docker network ls
 
 ----
 
-artifacts,MSP(channel-artifacts, crypto-config) 준비작업
+artifacts,MSP(channel-artifacts, crypto-config) 준비
 ----
 > first-network의 byfn.sh를 실행하여 channel-artifacts, crypto-config를 생성하도록 하겠습니다.
 
