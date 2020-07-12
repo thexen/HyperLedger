@@ -409,6 +409,8 @@ $ peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-arti
 $peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org2MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 
+----
+
 chain code
 ----
 1. package
