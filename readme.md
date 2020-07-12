@@ -16,6 +16,8 @@ HyperLedger Multi-Host 구성하기
 * yaml 파일 deploy
 * chain code 
 
+* utilz
+
 ----
 
 개요
@@ -81,6 +83,15 @@ $hostnamectl set-hostname node5
 ```   
 
 ### Docker Swarm 설정
+- port 해방
+```sh 
+   $ sudo firewall-cmd --add-port=2377/tcp --permanent
+   $ sudo firewall-cmd --add-port=7946/tcp --permanent
+   $ sudo firewall-cmd --add-port=7946/udp --permanent
+   $ sudo firewall-cmd --add-port=4789/udp --permanent
+   $ sudo firewall-cmd --reload
+```
+
 - initialize swarm
 ```sh 
 #node1
@@ -111,6 +122,8 @@ $docker network ls
 ![net](https://user-images.githubusercontent.com/15353753/87032148-1cbacb80-c21f-11ea-9704-d0de4d713127.png)
 
 **인프라 준비 완료**
+
+====
 
 artifacts,MSP(channel-artifacts, crypto-config) 준비작업
 ----
@@ -482,17 +495,17 @@ $peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name mycc
 #node2:cli, node3:cli, node4:cli, node5:cli
 $peer lifecycle chaincode commit -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --version 1 --sequence 1 --init-required
 ```
+
+![image](https://user-images.githubusercontent.com/15353753/87238529-56b5e880-c43e-11ea-8899-385ac2a62366.png)
+![image](https://user-images.githubusercontent.com/15353753/87238537-7d741f00-c43e-11ea-827d-930db803473d.png)
+
 * 정상적으로 commit이 되었다면 docker container가 추가되어 실행 된 것을 확인 할 수 있을 겁니다.
 
+====
 
-```sh 
-   $ sudo firewall-cmd --add-port=2377/tcp --permanent
-   $ sudo firewall-cmd --add-port=7946/tcp --permanent
-   $ sudo firewall-cmd --add-port=7946/udp --permanent
-   $ sudo firewall-cmd --add-port=4789/udp --permanent
-   $ sudo firewall-cmd --reload
-```
-
+utilz
+----
+* 사용하지 않는 volume 삭제
 ```sh 
 docker volume rm $(docker volume ls -qf dangling=true)
 ```
