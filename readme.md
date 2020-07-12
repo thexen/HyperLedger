@@ -416,16 +416,7 @@ chain code
 1. package
 * node2로 접속합니다.
 * cli의 container id를 구한 후 container를 실행합니다
-```sh 
-#node2
-$ dokcer ps
-```
-![image](https://user-images.githubusercontent.com/15353753/87163575-865fd600-c302-11ea-9179-5b678ffbe564.png)
 
-```sh 
-#node2
-$dokcer exec -it 242e40642972 bash
-```
 > scripts/utils.sh 의 packageChaincode() 참고
 
 > peer lifecycle chaincode package ${ChainCodeName}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${ChainCodeName}_${VERSION}
