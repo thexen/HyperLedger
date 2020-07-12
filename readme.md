@@ -346,7 +346,7 @@ $ peer channel create -o orderer.example.com:7050 -c mychannel -f ./channel-arti
 
 ```sh 
 #node2
-$ pocker cp caefcfbaca7:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
+$ docker cp caefcfbaca7:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block mychannel.block
 ```
 
 ![image](https://user-images.githubusercontent.com/15353753/87238112-51a26a80-c439-11ea-826b-b729f9587159.png)
