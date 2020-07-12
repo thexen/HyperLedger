@@ -400,6 +400,11 @@ anchor peer 설정
 ```sh 
 #node2:cli
 $ peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+```
+
+![image](https://user-images.githubusercontent.com/15353753/87238243-1a34bd80-c43b-11ea-8def-d791374e3f26.png)
+
+```sh 
 #node4:cli
 $peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org2MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
