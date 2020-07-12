@@ -19,7 +19,10 @@ HyperLedger Multi-Host 구성하기
    * peer yaml 파일 
    * yaml 파일 deploy
    
-* create channel, join channel, update anchor peer
+* channel 생성 및 join 
+   * create channel
+   * join channel
+   * update anchor peer
 
 * chain code 
    * package 하기
@@ -56,7 +59,7 @@ HyperLedger Multi-Host 구성하기
 
 준비 작업
 ----
-### Host name 설정
+### 1. Host name 설정
 host name이 중복되지 않도록 설정합니다.
 
 ```sh 
@@ -84,23 +87,7 @@ $hostnamectl set-hostname node4
 $hostnamectl set-hostname node5
 ```
 
-- swarm 설정을 위한 포트를 개방 합니다.
-```sh 
-   $ sudo firewall-cmd --add-port=2377/tcp --permanent
-   $ sudo firewall-cmd --add-port=7946/tcp --permanent
-   $ sudo firewall-cmd --add-port=7946/udp --permanent
-   $ sudo firewall-cmd --add-port=4789/udp --permanent   
-```
-
-- host의 date를 동기화 시킵니다
-
-```sh 
-   $ date -s 'yyyy-mm-dd hh:mm:ss'   
-```   
-
-----
-
-### Docker Swarm 설정
+### 2. Docker Swarm 설정
 - port 해방
 ```sh 
    $ sudo firewall-cmd --add-port=2377/tcp --permanent
@@ -109,6 +96,11 @@ $hostnamectl set-hostname node5
    $ sudo firewall-cmd --add-port=4789/udp --permanent
    $ sudo firewall-cmd --reload
 ```
+
+- host date 동기화
+```sh 
+   $ date -s 'yyyy-mm-dd hh:mm:ss'   
+``` 
 
 - initialize swarm
 ```sh 
@@ -153,8 +145,8 @@ artifacts,MSP(channel-artifacts, crypto-config) 준비작업
 $pwd
 /home/root/prj/fabric/fabric-samples-master/first-network
 ```
-- channel-artifacts 생성을 위한 설정
-   - configtx.yaml 파일을 열어 아래와 같이 Profiles 섹션을 수정합니다.
+### 1. channel-artifacts 생성을 위한 설정
+- configtx.yaml 파일을 열어 아래와 같이 Profiles 섹션을 수정합니다.
 ```sh 
 #node1
 $vi configtx.yaml
@@ -201,8 +193,8 @@ $vi configtx.yaml
 .
 .
 ```
-- crypto-config 생성을 위한 설정
-   - crypto-config.yaml 파일을 열어 OrdererOrgs 섹션을 수정합니다.
+### 2. crypto-config 생성을 위한 설정
+- crypto-config.yaml 파일을 열어 OrdererOrgs 섹션을 수정합니다.
  ```sh 
 #node1
 $vi crypto-config.yaml
@@ -231,7 +223,7 @@ OrdererOrgs:
 .
 .
 ```    
-- byfn.sh 실행
+### 3. byfn.sh 실행
 ```sh 
 #node1
 $./byfn.sh down
@@ -254,7 +246,7 @@ $ git clone https://github.com/thexen/HyperLedger.git
 ```
 ![image](https://user-images.githubusercontent.com/15353753/87144393-a8496080-c2e2-11ea-92e1-4aed216d7746.png)
 
-### orderer yaml 파일 설정
+### 1. orderer yaml 파일 설정
 
 - orderer.yaml, orderer2.yaml, orderer3.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
 - **channel-artifacts, crypto-config**이 생성된 path를 입력 합니다. 
@@ -285,7 +277,7 @@ networks:
 ```
 ![image](https://user-images.githubusercontent.com/15353753/87145566-7933ee80-c2e4-11ea-9987-64992b9cd118.png)
 
-### peer yaml 파일 설정
+### 2. peer yaml 파일 설정
 
 - peer0-org1.yaml, peer1-org1.yaml, peer0-org2.yaml, peer1-org2.yaml 파일을 열어 volumes 부분을 적당히 수정 합니다.
 - service peer0 와 peer0-cli 의 volumes를 orderer와 동일하게 설정합니다
@@ -330,7 +322,7 @@ $ vi docker-compse-peer0-org1.yaml
 .
 ```
 
-### deploy
+### 3. deploy
 
  - docker-compse 파일이 준비가 다 되었습니다.
  - 이제 container를 올려 보도록 하겠습니다.
@@ -345,7 +337,7 @@ $ docker stack deploy -c docker-compose-peer1-org1.yaml fabric
 $ docker stack deploy -c docker-compose-peer0-org2.yaml fabric
 $ docker stack deploy -c docker-compose-peer1-org2.yaml fabric
 ```
-- 실행 확인
+### 4. 실행 확인
 ```sh 
 #node1
 $ dokcer service ls
@@ -355,7 +347,10 @@ $ dokcer service ls
  
 ----
  
-### create channel
+channel 생성 및 join 
+----
+ 
+### 1. create channel
 
 1. node2로 접속합니다.
 2. cli의 container id를 구한 후 container를 실행합니다
@@ -404,7 +399,7 @@ $ docker cp mychannel.block [to-containerid]:/opt/gopath/src/github.com/hyperled
 
 * mychannel.block 파일은 /opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block 에 있습니다.
 
-### join channel
+### 2. join channel
 
 ```sh 
 #node2: cli
@@ -428,7 +423,7 @@ $ peer channel join -b mychannel.block
 > Error: genesis block file not found open mychannel.block: no such file or directory라 출력 된다면 
 > node2:cli(peer0-cli)의 mychannel.black를 node3,node4,node5의 cli로 복사하면 해결 될 것입니다.
 
-### anchor peer 설정
+### 3. anchor peer 설정
 
 ```sh 
 #node2:cli
