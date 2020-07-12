@@ -2,27 +2,43 @@ HyperLedger Multi-Host 구성하기
 ===============================
    
 * 개요
+
 * 구성 목표
    * node별 container 구성
    * node 정보  
+   
 * 인프라 준비작업
   * host name 설정
   * docker swarm 설정
   * overlay network 설정
+  
 * artifacts,MSP(channel-artifacts, crypto-config) 준비작업
+
 * git repogitory clone 
-* Oderer yaml 파일 설정
-* peer yaml 파일 
-* yaml 파일 deploy
+   * Oderer yaml 파일 설정
+   * peer yaml 파일 
+   * yaml 파일 deploy
+   
+* create channel, join channel, update anchor peer
+
 * chain code 
+   * package 하기
+   * 설치
+   * 설치 및 package id 확인
+   * 설치 승인
+   * 승인 상태 확인
+   * commit 하기
 
 * utilz
+   * 사용하지 않는 volume 삭제
 
 ----
 
 개요
 ----
 > Hyperledger의 first-network 예제는 Single-Host에서 동작 되도록 구성되어 실 서비스 적용에 적합하지 않은 구조입니다. 실 서비스 적용이 가능하도록 Multi-Host로 구성하는 방법을 알아 보도록 하겠습니다.
+
+----
 
 구성
 ----
@@ -123,7 +139,7 @@ $docker network ls
 
 **인프라 준비 완료**
 
-====
+----
 
 artifacts,MSP(channel-artifacts, crypto-config) 준비작업
 ----
@@ -224,6 +240,8 @@ $./byfn.sh generate
    * 생성된 두 폴더는 node1의 경로와 동일한 경로로 node2,node3,node4,node5에 복사를 합니다.
    
 **artifacts, msp 준비 완료**
+
+----
 
 git repogitory clone 
 ----
@@ -501,7 +519,7 @@ $peer lifecycle chaincode commit -o orderer.example.com:7050 --tls --cafile /opt
 
 * 정상적으로 commit이 되었다면 docker container가 추가되어 실행 된 것을 확인 할 수 있을 겁니다.
 
-====
+----
 
 utilz
 ----
